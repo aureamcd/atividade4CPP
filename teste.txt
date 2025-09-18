@@ -1,0 +1,1 @@
+echo "Ola mundo! Este e um teste para o sistema distribuido. Contando 1, 2, 3..." > teste.txt
