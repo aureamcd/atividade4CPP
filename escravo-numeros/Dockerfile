@@ -13,7 +13,7 @@ ADD https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohm
 
 # Compila a aplicação
 # O -o app define o nome do executável
-RUN g++ -std=c++17 -pthread main.cpp -o app
+RUN g++ -std=c++17 -pthread -static-libstdc++ main.cpp -o app
 
 # Estágio final de execução
 FROM debian:bullseye-slim
