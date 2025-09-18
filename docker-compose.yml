@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  mestre:
+    build: ./mestre
+    ports:
+      # Mapeia a porta 8080 do contêiner para a 8080 da máquina host
+      - "8080:8080"
+    networks:
+      - minha-rede
+
+  escravo-letras:
+    build: ./escravo-letras
+    # Não precisa expor a porta para o host, apenas para a rede interna
+    expose:
+      - "8081"
+    networks:
+      - minha-rede
+
+  escravo-numeros:
+    build: ./escravo-numeros
+    expose:
+      - "8082"
+    networks:
+      - minha-rede
+
+networks:
+  minha-rede:
+    driver: bridge

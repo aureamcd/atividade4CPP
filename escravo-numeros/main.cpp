@@ -1,5 +1,29 @@
-// Em main.cpp (mestre, escravos, cliente)
+#include <iostream>
 #include "httplib.h"
 
-// Apenas em main.cpp do mestre
-#include "json.hpp"
+int main() {
+    httplib::Server svr;
+
+    // Endpoint de verificação de saúde
+    svr.Get("/health", [](const httplib::Request &, httplib::Response &res) {
+        res.set_content("OK", "text/plain");
+    });
+
+    // Endpoint que recebe o texto e conta os números
+    svr.Post("/numeros", [](const httplib::Request &req, httplib::Response &res) {
+        std::string texto = req.body;
+        int count = 0;
+        for (char c : texto) {
+            if (std::isdigit(c)) {
+                count++;
+            }
+        }
+        std::cout << "Requisição recebida em /numeros. Contagem: " << count << std::endl;
+        res.set_content(std::to_string(count), "text/plain");
+    });
+
+    std::cout << "Servidor Escravo de Números rodando na porta 8082..." << std::endl;
+    svr.listen("0.0.0.0", 8082);
+
+    return 0;
+}
